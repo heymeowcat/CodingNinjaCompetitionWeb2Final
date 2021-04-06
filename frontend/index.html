@@ -14,10 +14,15 @@
 
 
         $(document).ready(function () {
-            //   $('#mainSection').hide();
-            //   $('#registersection').hide();
-            // $('#loginsection').hide();
+            $('#studentSection').show();
+            $('#loginsection').hide();
+            $('#PortalSection').hide();
+            $('#PortalSection2').hide();
             if (sessionStorage.getItem("token") != null) {
+                $('#studentSection').hide();
+                $('#loginsection').hide();
+                $('#PortalSection').show();
+                $('#PortalSection2').show();
                 refreshKeywordTable();
                 refreshUsersTable();
             }
@@ -64,9 +69,6 @@
 
             $.ajax(settings).done(function (response) {
                 sessionStorage.setItem("token", response.token);
-                // Retrieve
-                console.log(sessionStorage.getItem("token"));
-
             });
 
         }
@@ -197,9 +199,10 @@
             };
 
             $.ajax(settings).done(function (response) {
+      
                 $("#keywordsearchTable").html("");
                 $.each(response, function (k, v) {
-                    $("#keywordsearchTable").append("<tr><td>" + v.keycord + "</td><td>" + v
+                    $("#keywordsearchTable").append("<tr><td>" + v.keycode + "</td><td>" + v
                         .description + "</td></tr>");
                 });
             });
@@ -401,7 +404,7 @@
         </div>
     </section>
 
-    <div class="container section">
+    <div id="PortalSection2" class="container section">
         <div id="admins" class="content-tab">
 
             <div class="columns">
