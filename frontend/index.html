@@ -54,7 +54,7 @@
 
 
             var settings = {
-                url: baseUrl + "/authenticate",
+                url: baseUrl + "/admin/authenticate",
                 method: "POST",
                 timeout: 0,
                 dataType: 'json',
@@ -83,7 +83,7 @@
                 method: "GET",
                 timeout: 0,
                 "headers": {
-                    "Authorization": "Bearer "+sessionStorage.getItem("token")
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
             };
 
@@ -97,7 +97,7 @@
                         "'></td><td><input id='mobile" + v.id +
                         "' class='input' type='number' value='" + v.mobile +
                         "'></td><td><input id='username" + v
-                            .id + "' class='input' type='text' value='" + v.username +
+                        .id + "' class='input' type='text' value='" + v.username +
                         "'></td><td><input id='password" + v.id +
                         "' class='input' type='text' value='" + v.password +
                         "'></td><td><button class='button is-warning' onclick='updateUser(" + v.id +
@@ -194,7 +194,8 @@
             $.ajax(settings).done(function (response) {
                 $("#keywordsearchTable").html("");
                 $.each(response, function (k, v) {
-                    $("#keywordsearchTable").append("<tr><td>" + v.keycord + "</td><td>" + v.description + "</td></tr>");
+                    $("#keywordsearchTable").append("<tr><td>" + v.keycord + "</td><td>" + v
+                        .description + "</td></tr>");
                 });
             });
         }
@@ -208,7 +209,7 @@
             var newKeyword = new Object();
             newKeyword.Keywordname = kname;
             newKeyword.keyworddefinition = kdef;
-          
+
             var settings = {
                 url: baseUrl + "/feed/addfeed",
                 method: "POST",
@@ -241,10 +242,11 @@
                 $("#keywordTable").html("");
                 $.each(response, function (k, v) {
                     $("#keywordTable").append("<tr><td>" + v.id + "<td><input id='keywordname" +
-                        v.id +"' class='input' type='text' value='" + v.keycord +
+                        v.id + "' class='input' type='text' value='" + v.keycord +
                         "'></td><td><input id='description" + v.id +
                         "' class='input' type='text' value='" + v.description +
-                        "'></td><td><button class='button is-warning' onclick='updateKeyword(" + v.id +
+                        "'></td><td><button class='button is-warning' onclick='updateKeyword(" + v
+                        .id +
                         ")'>Update</button></td><td><button class='button is-danger' onclick='deleteKeyword(" +
                         v.id +
                         ")'>Delete</button></td></tr>");
