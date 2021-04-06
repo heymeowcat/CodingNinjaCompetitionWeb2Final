@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.heymeowcat.web2final.entity.Admin;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer>{
-
-	Admin findByUsername(String username);
-
+public interface adminRepository extends JpaRepository<Admin, Integer>{
+	
 }
