@@ -16,7 +16,7 @@
         $(document).ready(function () {
             //   $('#mainSection').hide();
             //   $('#registersection').hide();
-            $('#loginsection').hide();
+            // $('#loginsection').hide();
             //   if (sessionStorage.getItem("token") != null) {
             //     $('#mainSection').show();
             //     $('#registersection').hide();
@@ -54,9 +54,9 @@
 
 
             var settings = {
-                url: baseUrl + "/Users/authenticate",
-                method: "PoST",
-                timeout: 3000,
+                url: baseUrl + "/authenticate",
+                method: "POST",
+                timeout: 0,
                 dataType: 'json',
                 "headers": {
                     "Content-Type": "application/json"
@@ -83,7 +83,7 @@
                 method: "GET",
                 timeout: 0,
                 "headers": {
-                    "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWR1cmEiLCJleHAiOjE2MTc3MDY3MDcsImlhdCI6MTYxNzY4ODcwN30.yQBRYTfoln4H5QvdpiLiVAz1rKqWDfDI8gHoa7rFOZvAFpuH9D6y2Uzs6SJfw4QBfWs255LiFdt7rllzKCM0zw"
+                    "Authorization": "Bearer "+sessionStorage.getItem("token")
                 },
             };
 
@@ -92,10 +92,10 @@
                 $.each(response, function (k, v) {
                     $("#usersTable").append("<tr><td>" + v.id + "<td><input id='name" + v.id +
                         "' class='input' type='text' value='" + v.name +
-                        "'></td><td><input id='age" + v.id +
-                        "' class='input' type='number' value='" + v.age +
-                        "'></td><td><input id='telephone" + v.id +
-                        "' class='input' type='number' value='" + v.telephone +
+                        "'></td><td><input id='email" + v.id +
+                        "' class='input' type='text' value='" + v.email +
+                        "'></td><td><input id='mobile" + v.id +
+                        "' class='input' type='number' value='" + v.mobile +
                         "'></td><td><input id='username" + v
                             .id + "' class='input' type='text' value='" + v.username +
                         "'></td><td><input id='password" + v.id +
@@ -186,7 +186,7 @@
         function searchKeyword() {
             var keyword = $('#searchtext').val();
             var settings = {
-                url: baseUrl + "/feed/getFeedByName/" + keyword,
+                url: baseUrl + "/feed/getFeedsLike/" + keyword,
                 method: "GET",
                 timeout: 3000,
             };
@@ -200,62 +200,10 @@
         }
 
 
-        function updateCategory(x) {
-            var id = x;
-            var name = $('#categoryname' + x).val();
-            var description = $('#categorydescription' + x).val();
-
-            var availableCategory = new Object();
-            availableCategory.categoryid = id;
-            availableCategory.categoryName = name;
-            availableCategory.categoryDescription = description;
-
-            var settings = {
-                url: baseUrl + "/Categories/updateCategory",
-                method: "PUT",
-                timeout: 3000,
-                dataType: 'json',
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + sessionStorage.getItem("token")
-                },
-                contentType: 'application/json',
-                data: JSON.stringify(availableCategory)
-
-            };
-
-            $.ajax(settings).done(function (response) {
-                refreshCategoryTable();
-            });
-        }
-
-        function deleteCategory(x) {
-            var settings = {
-                url: baseUrl + "/Categories/" + x,
-                method: "DELETE",
-                timeout: 3000,
-                "headers": {
-                    "Authorization": "Bearer " + sessionStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (response) {
-                refreshCategoryTable();
-            });
-        }
-
-
-
-
-
-
-
-
-
 
         function addNewKeyword() {
-            var kname = $('#name').val();
-            var kdef = $('#def').val()
+            var kname = $('#keywordname').val();
+            var kdef = $('#keyworddef').val()
 
             var newKeyword = new Object();
             newKeyword.Keywordname = kname;
@@ -281,7 +229,7 @@
 
         function refreshKeywordTable() {
             var settings = {
-                url: baseUrl + "/Products/getAllProducts",
+                url: baseUrl + "/feed/getAll",
                 method: "GET",
                 "headers": {
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
@@ -290,30 +238,15 @@
             };
 
             $.ajax(settings).done(function (response) {
-                $("#productTable").html("");
+                $("#keywordTable").html("");
                 $.each(response, function (k, v) {
-                    $("#productTable").append("<tr><td>" + v.productid + "<td><input id='productname" +
-                        v
-                            .productid +
-                        "' class='input' type='text' value='" + v.productname +
-                        "'></td><td><input id='productdescription" + v.productid +
-                        "' class='input' type='text' value='" + v.productdescription +
-                        "'></td><td><input id='productsellprice" + v.productid +
-                        "' class='input' type='number' value='" + v.sellprice +
-                        "'></td><td><input id='productbuyprice" + v.productid +
-                        "' class='input' type='number' value='" + v.buyprice +
-                        "'></td><td><input id='productqty" + v.productid +
-                        "' class='input' type='number' value='" + v.qty +
-                        "'></td><td><input id='productcategory" + v.productid +
-                        "' class='input' type='text' value='" + v.category.categoryName +
-                        "'><input type='hidden' id='productcategoryid" + v.productid + "' value='" +
-                        v.category
-                            .categoryid +
-                        "'></td><td><button class='button is-warning' onclick='updateProduct(" + v
-                            .productid +
-                        ")'>Update</button></td><td><button class='button is-danger' onclick='deleteProduct(" +
-                        v
-                            .productid +
+                    $("#keywordTable").append("<tr><td>" + v.id + "<td><input id='keywordname" +
+                        v.id +"' class='input' type='text' value='" + v.keycord +
+                        "'></td><td><input id='description" + v.id +
+                        "' class='input' type='text' value='" + v.description +
+                        "'></td><td><button class='button is-warning' onclick='updateKeyword(" + v.id +
+                        ")'>Update</button></td><td><button class='button is-danger' onclick='deleteKeyword(" +
+                        v.id +
                         ")'>Delete</button></td></tr>");
                 });
             });
@@ -321,56 +254,45 @@
 
         function updateKeyword(x) {
             var id = x;
-            var name = $('#productname' + x).val();
-            var description = $('#productdescription' + x).val();
-            var sellprice = $('#productsellprice' + x).val();
-            var buyprice = $('#productbuyprice' + x).val();
-            var qty = $('#productqty' + x).val();
-            var categoryid = $('#productcategoryid' + x).val();
+            var keywordname = $('#keywordname' + x).val();
+            var description = $('#description' + x).val();
 
-            var availableProduct = new Object();
-            availableProduct.productid = id;
-            availableProduct.productname = name;
-            availableProduct.productdescription = description;
-            availableProduct.sellprice = sellprice;
-            availableProduct.buyprice = buyprice;
-            availableProduct.qty = qty;
-            availableProduct.category = {
-                "categoryid": categoryid
-            };
-
+            var availablekeyword = new Object();
+            availablekeyword.id = id;
+            availablekeyword.keywordname = keywordname;
+            availablekeyword.description = description;
 
             var settings = {
-                url: baseUrl + "/Products/updateProduct",
+                url: baseUrl + "/feed/updateFeed",
                 method: "PUT",
-                timeout: 3000,
+                timeout: 0,
                 dataType: 'json',
                 "headers": {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
                 contentType: 'application/json',
-                data: JSON.stringify(availableProduct)
+                data: JSON.stringify(availablekeyword)
 
             };
 
             $.ajax(settings).done(function (response) {
-                refreshProductsTable();
+                refreshKeywordTable();
             });
         }
 
         function deleteKeyword(x) {
             var settings = {
-                url: baseUrl + "/Products/" + x,
+                url: baseUrl + "/feed/deleteFeed/" + x,
                 method: "DELETE",
                 "headers": {
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
-                timeout: 3000
+                timeout: 0
             };
 
             $.ajax(settings).done(function (response) {
-                refreshProductsTable();
+                refreshKeywordTable();
             });
         }
     </script>
@@ -562,20 +484,20 @@
                     <div class="field">
                         <label class="label">Keyword</label>
                         <div class="control">
-                            <input id="name" class="input" type="text">
+                            <input id="keywordname" class="input" type="text">
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">Definition</label>
                         <div class="control">
-                            <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+                            <textarea id="keyworddef" class="textarea" placeholder="e.g. Hello world"></textarea>
                         </div>
                     </div>
 
                     <div class="field">
                         <div class="control">
-                            <button onclick="addNewUser()" id="button" class="button is-primary">Create New
+                            <button onclick="addNewKeyword()" id="button" class="button is-primary">Create New
                                 Keyword</button>
                         </div>
                     </div>
