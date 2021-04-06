@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.heymeowcat.web2final.entity.Admin;
@@ -18,6 +20,9 @@ public class AdminService implements UserDetailsService{
 	@Autowired
 	AdminRepository repository;
 	
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
+
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,13 +41,19 @@ public class AdminService implements UserDetailsService{
 
 
 	public List<Admin> getAllAdmin() {
-		return repository.findAll();
+		return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 	}
 
 
 
 	public Admin addAdmin(Admin admin) {
-		return repository.save(admin);
+		Admin newAdmin = new Admin();
+        newAdmin.setName(admin.getName());
+        newAdmin.setMobile(admin.getMobile());
+        newAdmin.setEmail(admin.getEmail());
+        newAdmin.setUsername(admin.getUsername());
+        newAdmin.setPassword(bcryptEncoder.encode(admin.getPassword()));
+        return repository.save(newAdmin);
 	}
 
 
