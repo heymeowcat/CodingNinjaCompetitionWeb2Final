@@ -71,7 +71,6 @@
 
 
             $.ajax(settings).done(function (response) {
-                alert(response.timestamp);
                 sessionStorage.setItem("token", response.token);
                 location.reload();
             }).fail(function (jqXHR, textStatus, errorThrown) {
