@@ -1,15 +1,13 @@
 package com.heymeowcat.web2final.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.heymeowcat.web2final.entity.Feed;
+import com.heymeowcat.web2final.entity.Admin;
 
 @Repository
-public interface FeedRepository extends JpaRepository<Feed, Integer>{
+public interface AdminRepository extends JpaRepository<Admin, Integer>{
 
-	List<Feed> findById(String key);
+	Admin findByUsername(String username);
 
 }

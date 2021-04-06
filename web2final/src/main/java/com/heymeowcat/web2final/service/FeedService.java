@@ -19,7 +19,7 @@ public class FeedService {
 	}
 
 	public List<Feed> getFeedsByKey(String key) {
-		return repository.findBykeycord(key);
+		return repository.findById(key);
 	}
 
 	public Feed addFeed(Feed feed) {
