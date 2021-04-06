@@ -113,16 +113,16 @@
         function updateUser(x) {
             var id = x;
             var name = $('#name' + x).val();
-            var age = $('#age' + x).val();
-            var tel = $('#telephone' + x).val();
+            var mail = $('#email' + x).val();
+            var mobile = $('#mobile' + x).val();
             var usn = $('#username' + x).val();
             var psw = $('#password' + x).val();
 
             var availableUser = new Object();
             availableUser.id = id;
             availableUser.name = name;
-            availableUser.age = parseInt(age);
-            availableUser.telephone = parseInt(tel);
+            availableUser.mobile = mobile;
+            availableUser.email = mail;
             availableUser.username = usn;
             availableUser.password = psw;
 
@@ -145,6 +145,32 @@
             });
         }
 
+
+        function addNewUser() {
+            var name = $('#name').val();
+            var mail = $('#email').val();
+            var mob = $('#mobile').val();
+            var usn = $('#usn').val();
+            var psw = $('#psw').val();
+
+            var settings = {
+                url: baseUrl + "/Users/saveUser",
+                method: "POST",
+                timeout: 3000,
+                data: {
+                    name: name,
+                    email: mail,
+                    mobile: mob,
+                    username: usn,
+                    password: psw
+                }
+            };
+
+            $.ajax(settings).done(function (response) {
+                refreshUsersTable();
+            });
+        }
+
         function deleteUser(x) {
             var settings = {
                 url: baseUrl + "/Users/" + x,
@@ -156,34 +182,6 @@
                 refreshUsersTable();
             });
         }
-
-
-        function addNewUser() {
-            var name = $('#name').val();
-            var age = $('#age').val();
-            var tel = $('#telephone').val();
-            var usn = $('#usn').val();
-            var psw = $('#psw').val();
-
-            var settings = {
-                url: baseUrl + "/Users/saveUser",
-                method: "POST",
-                timeout: 3000,
-                data: {
-                    name: name,
-                    age: age,
-                    telephone: tel,
-                    username: usn,
-                    password: psw
-                }
-            };
-
-            $.ajax(settings).done(function (response) {
-                refreshUsersTable();
-            });
-        }
-
-
 
         function addNewcategory() {
             var categoryname = $('#categoryname').val();
