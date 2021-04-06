@@ -36,12 +36,12 @@ public class FeedController {
 	}
 	
 	@PostMapping("/addFeed")
-	public Feed saveUsers(@RequestBody Feed feed){
+	public Feed saveFeed(@RequestBody Feed feed){
 		return service.addFeed(feed);
 	}
 	
 	@PutMapping("/updateFeed")
-	public Feed updateUser(@RequestBody Feed feed) {
+	public Feed updateFeed(@RequestBody Feed feed) {
 		return service.updateFeed(feed);
 	}
 	

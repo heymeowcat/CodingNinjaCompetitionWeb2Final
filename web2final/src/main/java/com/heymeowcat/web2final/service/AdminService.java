@@ -1,77 +1,78 @@
 package com.heymeowcat.web2final.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.heymeowcat.web2final.entity.Admin;
-import com.heymeowcat.web2final.repository.adminRepository;
+import com.heymeowcat.web2final.repository.AdminRepository;
 
 @Service
-public class adminService {
+public class AdminService implements UserDetailsService{
 
 	@Autowired
-	adminRepository adminRepo;
-
-//save admin here
-	public Admin saveAdminDetails(Admin adminOBJ) {
-		return adminRepo.save(adminOBJ);
-	}
-
-//update admin here
-	public Admin updateAdminProfile(Admin updatedAdminOBJ) {
-		Admin adminResultOBJ = adminRepo.findById(updatedAdminOBJ.getId()).orElse(null);
-		if(adminResultOBJ!=null) {
-			adminResultOBJ.setName(updatedAdminOBJ.getName());
-			adminResultOBJ.setEmail(updatedAdminOBJ.getEmail());
-			adminResultOBJ.setMobile(updatedAdminOBJ.getMobile());
-			adminResultOBJ.setUsername(updatedAdminOBJ.getUsername());
-                        adminResultOBJ.setPassword(updatedAdminOBJ.getPassword());
-                        adminResultOBJ.setStatus(updatedAdminOBJ.getStatus());
-                        adminResultOBJ.setDateCreated(updatedAdminOBJ.getDateCreated());
-                        adminResultOBJ.setLastUpdated(updatedAdminOBJ.getLastUpdated());
-			
-			adminRepo.save(adminResultOBJ);
-		}
-		
-		return adminResultOBJ;
-	}
-
-//delete admin permanatly here
-	public String deleteAdmin(int idAdmin) {
-		Admin adminOBJ = adminRepo.findById(idAdmin).orElse(null);
-		if(adminOBJ!=null) {
-			adminRepo.delete(adminOBJd);
-			return "Delete Admin : "+idAdmin;
-		}else {
-			return "No support admin found!";
-		}
-	}
-
-//delete admin temporary here
-	public Admin updateAdminProfile(int idAdmin) {
-		Admin adminResultOBJ = adminRepo.findById(int idAdmin).orElse(null);
-		if(adminResultOBJ!=null) {
-			adminResultOBJ.setName(updatedAdminOBJ.getName());
-			adminResultOBJ.setEmail(updatedAdminOBJ.getEmail());
-			adminResultOBJ.setMobile(updatedAdminOBJ.getMobile());
-			adminResultOBJ.setUsername(updatedAdminOBJ.getUsername());
-                        adminResultOBJ.setPassword(updatedAdminOBJ.getPassword());
-                        adminResultOBJ.setStatus("Deleted");
-                        adminResultOBJ.setDateCreated(updatedAdminOBJ.getDateCreated());
-                        adminResultOBJ.setLastUpdated(updatedAdminOBJ.getLastUpdated());
-			
-			adminRepo.save(adminResultOBJ);
-		}
-		
-		return adminResultOBJ;
-	}
+	AdminRepository repository;
 	
-//get all admin list here
-	public List<Admin> getAllAdmins() {
-		return adminRepo.findAll();
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+//		repository.findById(null);
+		Admin admin =  repository.findByUsername(username);
+		if(admin!=null) {		
+			return new org.springframework.security.core.userdetails.User(admin.getUsername(), admin.getPassword(), new ArrayList<>());
+		}else {
+			return null;
+		}
+	
+	
 	}
 
+
+
+	public List<Admin> getAllAdmin() {
+		return repository.findAll();
+	}
+
+
+
+	public Admin addAdmin(Admin admin) {
+		return repository.save(admin);
+	}
+
+
+
+	public Admin updateAdmin(Admin admin) {
+		
+		Admin am = repository.findById(admin.getId()).orElse(null);
+		if(am!=null) {
+			am.setEmail(admin.getEmail());
+			am.setMobile(admin.getMobile());
+			am.setName(admin.getName());
+			am.setPassword(admin.getPassword());
+			am.setStatus(true);
+			am.setUsername(admin.getUsername());
+			
+			repository.save(am);
+		}
+		return am;
+	}
+
+
+
+	public String deleteAdmin(int id) {
+		Admin admin = repository.findById(id).orElse(null);
+		if(admin!=null) {
+			repository.delete(admin);
+			return "Admin Deleted : "+id;
+		}else {
+			return "Admin Not Found!";
+		}
+	}
 	
 }
