@@ -10,6 +10,6 @@ import com.heymeowcat.web2final.entity.Feed;
 @Repository
 public interface FeedRepository extends JpaRepository<Feed, Integer>{
 
-	List<Feed> findById(String key);
+	List<Feed> findBykeycord(String key);
 
 }
