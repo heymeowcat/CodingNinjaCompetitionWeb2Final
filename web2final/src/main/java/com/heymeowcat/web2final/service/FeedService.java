@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.heymeowcat.web2final.entity.Feed;
+import com.heymeowcat.web2final.model.KeyCode;
 import com.heymeowcat.web2final.repository.FeedRepository;
 
 @Service
@@ -49,6 +50,10 @@ public class FeedService {
 		}else {
 			return "Feed Not Found!";
 		}
+	}
+
+	public List<KeyCode> getFeedsByKeyCodeLike(String key) {
+		return repository.getFeedsByKeyCode(key);
 	}
 	
 
