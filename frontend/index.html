@@ -97,7 +97,7 @@
                         "'></td><td><input id='telephone" + v.id +
                         "' class='input' type='number' value='" + v.telephone +
                         "'></td><td><input id='username" + v
-                        .id + "' class='input' type='text' value='" + v.username +
+                            .id + "' class='input' type='text' value='" + v.username +
                         "'></td><td><input id='password" + v.id +
                         "' class='input' type='text' value='" + v.password +
                         "'></td><td><button class='button is-warning' onclick='updateUser(" + v.id +
@@ -183,62 +183,6 @@
             });
         }
 
-        function addNewcategory() {
-            var categoryname = $('#categoryname').val();
-            var categorydescription = $('#categorydescription').val()
-
-            var newCategory = new Object();
-            newCategory.categoryName = categoryname;
-            newCategory.categoryDescription = categorydescription;
-
-            var settings = {
-                url: baseUrl + "/Categories/addCategory",
-                method: "POST",
-                timeout: 3000,
-                dataType: 'json',
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + sessionStorage.getItem("token")
-                },
-                contentType: 'application/json',
-                data: JSON.stringify(newCategory)
-            };
-
-            $.ajax(settings).done(function (response) {
-                refreshCategoryTable();
-            });
-        }
-
-        function refreshCategoryTable() {
-            var settings = {
-                url: baseUrl + "/Categories/getAllCategories",
-                method: "GET",
-                timeout: 3000,
-                "headers": {
-                    "Authorization": "Bearer " + sessionStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (response) {
-                $("#categoriesTable").html("");
-                $.each(response, function (k, v) {
-                    $("#categoriesTable").append("<tr><td>" + v.categoryid +
-                        "<td><input id='categoryname" + v
-                        .categoryid +
-                        "' class='input' type='text' value='" + v.categoryName +
-                        "'></td><td><input id='categorydescription" + v.categoryid +
-                        "' class='input' type='text' value='" + v.categoryDescription +
-                        "'><td><button class='button is-warning' onclick='updateCategory(" + v
-                        .categoryid +
-                        ")'>Update</button></td><td><button class='button is-danger' onclick='deleteCategory(" +
-                        v
-                        .categoryid +
-                        ")'>Delete</button></td></tr>");
-                });
-            });
-        }
-
-
         function searchKeyword() {
             var keyword = $('#searchtext').val();
             var settings = {
@@ -250,7 +194,7 @@
             $.ajax(settings).done(function (response) {
                 $("#keywordsearchTable").html("");
                 $.each(response, function (k, v) {
-                    $("#keywordsearchTable").append("<tr><td>"+v.keycord+"</td><td>"+v.description+"</td></tr>");
+                    $("#keywordsearchTable").append("<tr><td>" + v.keycord + "</td><td>" + v.description + "</td></tr>");
                 });
             });
         }
@@ -311,26 +255,16 @@
 
 
 
-        function addNewProduct() {
-            var pname = $('#pname').val();
-            var pdescription = $('#pdescription').val()
-            var pbuyprice = $('#pbuyprice').val()
-            var psellprice = $('#psellprice').val()
-            var pqty = $('#pqty').val()
-            var pcategoryid = $('#pcategoryid').val()
+        function addNewKeyword() {
+            var kname = $('#name').val();
+            var kdef = $('#def').val()
 
-            var newProduct = new Object();
-            newProduct.productname = pname;
-            newProduct.productdescription = pdescription;
-            newProduct.sellprice = pbuyprice;
-            newProduct.buyprice = psellprice;
-            newProduct.qty = pqty;
-            newProduct.category = {
-                "categoryid": pcategoryid
-            };
-
+            var newKeyword = new Object();
+            newKeyword.Keywordname = kname;
+            newKeyword.keyworddefinition = kdef;
+          
             var settings = {
-                url: baseUrl + "/Products/addProduct",
+                url: baseUrl + "/feed/addfeed",
                 method: "POST",
                 timeout: 3000,
                 dataType: 'json',
@@ -339,15 +273,15 @@
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
                 contentType: 'application/json',
-                data: JSON.stringify(newProduct)
+                data: JSON.stringify(newKeyword)
             };
 
             $.ajax(settings).done(function (response) {
-                refreshProductsTable();
+                refreshKeywordTable();
             });
         }
 
-        function refreshProductsTable() {
+        function refreshKeywordTable() {
             var settings = {
                 url: baseUrl + "/Products/getAllProducts",
                 method: "GET",
@@ -362,7 +296,7 @@
                 $.each(response, function (k, v) {
                     $("#productTable").append("<tr><td>" + v.productid + "<td><input id='productname" +
                         v
-                        .productid +
+                            .productid +
                         "' class='input' type='text' value='" + v.productname +
                         "'></td><td><input id='productdescription" + v.productid +
                         "' class='input' type='text' value='" + v.productdescription +
@@ -376,20 +310,18 @@
                         "' class='input' type='text' value='" + v.category.categoryName +
                         "'><input type='hidden' id='productcategoryid" + v.productid + "' value='" +
                         v.category
-                        .categoryid +
+                            .categoryid +
                         "'></td><td><button class='button is-warning' onclick='updateProduct(" + v
-                        .productid +
+                            .productid +
                         ")'>Update</button></td><td><button class='button is-danger' onclick='deleteProduct(" +
                         v
-                        .productid +
+                            .productid +
                         ")'>Delete</button></td></tr>");
                 });
             });
         }
 
-
-
-        function updateProduct(x) {
+        function updateKeyword(x) {
             var id = x;
             var name = $('#productname' + x).val();
             var description = $('#productdescription' + x).val();
@@ -429,7 +361,7 @@
             });
         }
 
-        function deleteProduct(x) {
+        function deleteKeyword(x) {
             var settings = {
                 url: baseUrl + "/Products/" + x,
                 method: "DELETE",
@@ -643,16 +575,12 @@
                         </div>
                     </div>
 
-
-
                     <div class="field">
                         <div class="control">
                             <button onclick="addNewUser()" id="button" class="button is-primary">Create New
                                 Keyword</button>
                         </div>
                     </div>
-
-
 
                 </div>
                 <div class="column">
