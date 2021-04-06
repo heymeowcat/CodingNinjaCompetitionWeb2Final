@@ -16,7 +16,7 @@
         $(document).ready(function () {
             //   $('#mainSection').hide();
             //   $('#registersection').hide();
-            //   $('#loginsection').show();
+              $('#loginsection').hide();
             //   if (sessionStorage.getItem("token") != null) {
             //     $('#mainSection').show();
             //     $('#registersection').hide();
@@ -452,20 +452,9 @@
                             </div>
 
 
-
-                            <div class="field">
-                                <label for="" class="checkbox">
-                                    <input type="checkbox">
-                                    Remember me
-                                </label>
-                            </div>
                             <div class="field level">
                                 <button onclick="login()" class="level-left  button is-success">
                                     Login
-                                </button>
-                                <button onclick="$('#loginsection').hide();$('#registersection').show();"
-                                    class="level-right button is-ghost">
-                                    Register
                                 </button>
                             </div>
                         </div>
@@ -478,74 +467,12 @@
 
 
 
-    <section id="registersection" style="background:#0cc7a8;" class="hero is-fullheight">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-centered">
-                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                        <div class="box">
-                            <div class="field">
-
-                                <div class="field">
-                                    <label class="label">Name</label>
-                                    <div class="control">
-                                        <input id="name" class="input" type="text">
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label class="label">Age</label>
-                                    <div class="control">
-                                        <input id="age" class="input" type="number">
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label class="label">Telephone</label>
-                                    <div class="control">
-                                        <input id="telephone" class="input" type="tel">
-                                    </div>
-                                </div>
-
-
-                                <div class="field">
-                                    <label class="label">Username</label>
-                                    <div class="control">
-                                        <input id="usn" class="input" type="text">
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label class="label">Password</label>
-                                    <div class="control">
-                                        <input id="psw" class="input" type="password">
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="field level">
-                                    <button onclick="addNewUser()" class="level-left  button is-success">
-                                        Register
-                                    </button>
-                                    <button onclick="$('#loginsection').show();$('#registersection').hide();"
-                                        class="level-right button is-ghost">
-                                        Login
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
 
 
 
 
 
-    <section style="background:#0cc7a8;" id="PortalSection" class="hero is-success">
+    <section style="background:#0cc7a8;" id="PortalSection" class="hero is-success ">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title">
@@ -556,7 +483,7 @@
 
         <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth is-large">
-                <div class="container">
+                <div class="container ">
                     <ul>
                         <li class="tab is-active " onclick="openTab(event,'admins')"><a>Admins</a></li>
                         <li class="tab" onclick="openTab(event,'fields')"><a>Fields</a></li>
