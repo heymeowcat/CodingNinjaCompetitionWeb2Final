@@ -14,7 +14,7 @@ public interface FeedRepository extends JpaRepository<Feed, Integer>{
 
 	List<Feed> findById(String key);
 
-	@Query("SELECT new com.heymeowcat.web2final.model.KeyCode(f.id,f.keycord) FROM Feed f WHERE f.keycord LIKE ?1%")
+	@Query("SELECT new com.heymeowcat.web2final.model.KeyCode(f.id,f.keycord,f.description) FROM Feed f WHERE f.keycord LIKE ?1%")
 	public List<KeyCode> getFeedsByKeyCode(String keycode);
 	
 	

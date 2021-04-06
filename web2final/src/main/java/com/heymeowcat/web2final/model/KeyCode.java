@@ -9,13 +9,9 @@ public class KeyCode {
 
 	private int id;
 	private String keycode;
+	private String description;
 	
-	
-	public KeyCode(int id, String keycode) {
-		super();
-		this.id = id;
-		this.keycode = keycode;
-	}
+
 	public int getId() {
 		return id;
 	}
@@ -27,6 +23,17 @@ public class KeyCode {
 	}
 	public void setKeycode(String keycode) {
 		this.keycode = keycode;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public KeyCode(int id, String keycode, String description) {
+		this.id = id;
+		this.keycode = keycode;
+		this.description = description;
 	}
 	
 	
