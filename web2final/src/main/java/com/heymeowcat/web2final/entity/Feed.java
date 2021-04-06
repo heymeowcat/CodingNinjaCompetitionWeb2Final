@@ -22,9 +22,13 @@ import lombok.NoArgsConstructor;
 @Table(name="feed")
 public class Feed implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private int id;
-	private String key;
+	private String keycord;
 	private String description;
 	private boolean status;
 	
@@ -44,13 +48,13 @@ public class Feed implements Serializable{
 	}
 
 
-	public String getKey() {
-		return key;
+	public String getKeycord() {
+		return keycord;
 	}
 
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setKeycord(String keycord) {
+		this.keycord = keycord;
 	}
 
 
@@ -82,6 +86,16 @@ public class Feed implements Serializable{
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+
+
+
 	
 	
 	
