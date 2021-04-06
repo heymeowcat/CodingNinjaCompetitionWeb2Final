@@ -17,14 +17,9 @@
             //   $('#mainSection').hide();
             //   $('#registersection').hide();
             // $('#loginsection').hide();
-            //   if (sessionStorage.getItem("token") != null) {
-            //     $('#mainSection').show();
-            //     $('#registersection').hide();
-            //     $('#loginsection').hide();
-            //     refreshUsersTable();
-            //     refreshCategoryTable();
-            //     refreshProductsTable();
-            //   }
+            if (sessionStorage.getItem("token") != null) {
+                refreshKeywordTable();
+            }
         });
 
 
@@ -74,7 +69,6 @@
             });
 
         }
-
 
 
         function refreshUsersTable() {
@@ -153,6 +147,15 @@
             var usn = $('#usn').val();
             var psw = $('#psw').val();
 
+
+            var newAdmin = new Object();
+            newAdmin.name = name;
+            newAdmin.email = mail;
+            newAdmin.email = mail;
+            newAdmin.email = mail;
+            newAdmin.email = mail;
+
+
             var settings = {
                 url: baseUrl + "/Users/saveUser",
                 method: "POST",
@@ -207,16 +210,16 @@
             var kdef = $('#keyworddef').val()
 
             var newKeyword = new Object();
-            newKeyword.Keywordname = kname;
-            newKeyword.keyworddefinition = kdef;
+            newKeyword.keycord = kname;
+            newKeyword.description = kdef;
+
 
             var settings = {
-                url: baseUrl + "/feed/addfeed",
+                url: baseUrl + "/feed/addFeed",
                 method: "POST",
                 timeout: 3000,
                 dataType: 'json',
                 "headers": {
-                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
                 contentType: 'application/json',
@@ -258,10 +261,9 @@
             var id = x;
             var keywordname = $('#keywordname' + x).val();
             var description = $('#description' + x).val();
-
             var availablekeyword = new Object();
             availablekeyword.id = id;
-            availablekeyword.keywordname = keywordname;
+            availablekeyword.keycord = keywordname;
             availablekeyword.description = description;
 
             var settings = {
