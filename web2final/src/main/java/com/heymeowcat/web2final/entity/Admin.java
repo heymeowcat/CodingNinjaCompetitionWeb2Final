@@ -28,10 +28,6 @@ public class Admin implements Serializable{
 	private String email;
 	private boolean status;
 
-	
-	public Admin() {
-		super();
-	}
 	public int getId() {
 		return id;
 	}

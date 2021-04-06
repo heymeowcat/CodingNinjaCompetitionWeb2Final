@@ -1,10 +1,6 @@
 package com.heymeowcat.web2final.model;
 
 
-import lombok.NoArgsConstructor;
-
-
-@NoArgsConstructor
 public class KeyCode {
 
 	private int id;
@@ -34,6 +30,8 @@ public class KeyCode {
 		this.id = id;
 		this.keycode = keycode;
 		this.description = description;
+	}
+	public KeyCode() {
 	}
 	
 	
