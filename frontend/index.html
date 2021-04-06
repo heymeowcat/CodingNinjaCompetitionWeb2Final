@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Web 2 Final</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'>
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
@@ -43,16 +43,18 @@
             evt.currentTarget.className += " is-active";
         }
 
+        function logout() {
+            sessionStorage.clear();
+            location.reload();
+        }
+
 
         function login() {
-
             var lgnusn = $("#usernameinlogin").val();
             var lgnpsw = $("#passwordinlogin").val();
-
             var jwtreq = new Object();
             jwtreq.username = lgnusn;
             jwtreq.password = lgnpsw;
-
 
             var settings = {
                 url: baseUrl + "/admin/authenticate",
@@ -67,10 +69,23 @@
 
             };
 
-            $.ajax(settings).done(function (response) {
-                sessionStorage.setItem("token", response.token);
-            });
 
+            $.ajax(settings).done(function (response) {
+                alert(response.timestamp);
+                sessionStorage.setItem("token", response.token);
+                location.reload();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                Toastify({
+                    text: "Wrong Credentials",
+                    duration: 2000,
+                    close: true,
+                    gravity: "bottom", 
+                    position: "center", 
+                    backgroundColor: "linear-gradient(to right, #f54242, #f54242)",
+                    stopOnFocus: true,
+                    onClick: function () {}
+                }).showToast();
+            });
         }
 
 
@@ -93,11 +108,11 @@
                         "' class='input' type='text' value='" + v.email +
                         "'></td><td><input id='mobile" + v.id +
                         "' class='input' type='number' value='" + v.mobile +
-                        "'></td><td><input id='username" + v
-                        .id + "' class='input' type='text' value='" + v.username +
-                        "'></td><td><input id='password" + v.id +
-                        "' class='input' type='text' value='" + v.password +
-                        "'></td><td><button class='button is-warning' onclick='updateUser(" + v.id +
+                        "'></td><input id='username" + v
+                        .id + "' class='input' type='hidden' value='" + v.username +
+                        "'><input id='password" + v.id +
+                        "' class='input' type='hidden' value='" + v.password +
+                        "'><td><button class='button is-warning' onclick='updateUser(" + v.id +
                         ")'>Update</button></td><td><button class='button is-danger' onclick='deleteUser(" +
                         v.id +
                         ")'>Delete</button></td></tr>");
@@ -199,11 +214,12 @@
             };
 
             $.ajax(settings).done(function (response) {
-      
+
                 $("#keywordsearchTable").html("");
                 $.each(response, function (k, v) {
-                    $("#keywordsearchTable").append("<tr><td>" + v.keycode + "</td><td>" + v
-                        .description + "</td></tr>");
+                    $("#keywordsearchTable").append("<tr><td>Keyword: <b>" + v.keycode +
+                        "<b></td><td>Definition: <b>" + v
+                        .description + "</b></td></tr>");
                 });
             });
         }
@@ -361,6 +377,10 @@
                                 <button onclick="searchKeyword()" class="level-left  button is-success">
                                     Search
                                 </button>
+                                <button onclick="$('#loginsection').show();$('#studentSection').hide();"
+                                    class="level-right button">
+                                    Login as Admin
+                                </button>
                             </div>
                             <table class="table">
                                 <tbody id="keywordsearchTable">
@@ -382,13 +402,16 @@
 
 
 
-    <section style="background:#0cc7a8;" id="PortalSection" class="hero is-success ">
+    <section style="background:#29bb89;" id="PortalSection" class="hero is-success ">
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title">
                     Portal
+
                 </h1>
+                <button class="button" onclick="logout()">Logout</button>
             </div>
+
         </div>
 
         <div class="hero-foot">
@@ -467,8 +490,6 @@
                                 <th><abbr title="Name">Name</abbr></th>
                                 <th><abbr title="Email">Email</abbr></th>
                                 <th><abbr title="Mobile">Mobile</abbr></th>
-                                <th><abbr title="Username">Username</abbr></th>
-                                <th><abbr title="Password for">Password</abbr></th>
                                 <th><abbr title="Update">Update</abbr></th>
                                 <th><abbr title="Delete">Delete</abbr></th>
                             </tr>
@@ -534,14 +555,7 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 </html>
