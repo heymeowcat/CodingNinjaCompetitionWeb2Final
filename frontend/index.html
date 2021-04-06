@@ -16,7 +16,7 @@
         $(document).ready(function () {
             //   $('#mainSection').hide();
             //   $('#registersection').hide();
-              $('#loginsection').hide();
+            $('#loginsection').hide();
             //   if (sessionStorage.getItem("token") != null) {
             //     $('#mainSection').show();
             //     $('#registersection').hide();
@@ -237,6 +237,24 @@
                 });
             });
         }
+
+
+        function searchKeyword() {
+            var keyword = $('#searchtext').val();
+            var settings = {
+                url: baseUrl + "/feed/getFeedByName/" + keyword,
+                method: "GET",
+                timeout: 3000,
+            };
+
+            $.ajax(settings).done(function (response) {
+                $("#keywordsearchTable").html("");
+                $.each(response, function (k, v) {
+                    $("#keywordsearchTable").append("<tr><td>"+v.keycord+"</td><td>"+v.description+"</td></tr>");
+                });
+            });
+        }
+
 
 
 
@@ -466,6 +484,37 @@
 
 
 
+    <section id="studentSection" class="hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column ">
+                        <div class="box">
+                            <div class="field">
+                                <label class="label">Search Keyword</label>
+                                <div class="control">
+                                    <input id="searchtext" type="text" class="input" required>
+                                </div>
+                            </div>
+                            <div class="field level">
+                                <button onclick="searchKeyword()" class="level-left  button is-success">
+                                    Search
+                                </button>
+                            </div>
+                            <table class="table">
+                                <tbody id="keywordsearchTable">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
 
 
 
@@ -594,7 +643,7 @@
                         </div>
                     </div>
 
-                  
+
 
                     <div class="field">
                         <div class="control">
