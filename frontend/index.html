@@ -19,6 +19,7 @@
             // $('#loginsection').hide();
             if (sessionStorage.getItem("token") != null) {
                 refreshKeywordTable();
+                refreshUsersTable();
             }
         });
 
@@ -73,7 +74,7 @@
 
         function refreshUsersTable() {
             var settings = {
-                url: baseUrl + "/Users/getAllUsers",
+                url: baseUrl + "/admin/getAllAdmins",
                 method: "GET",
                 timeout: 0,
                 "headers": {
@@ -121,12 +122,11 @@
             availableUser.password = psw;
 
             var settings = {
-                url: baseUrl + "/Users/updateUser",
+                url: baseUrl + "/admin/updateAdmin",
                 method: "PUT",
                 timeout: 3000,
                 dataType: 'json',
                 "headers": {
-                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + sessionStorage.getItem("token")
                 },
                 contentType: 'application/json',
@@ -150,23 +150,22 @@
 
             var newAdmin = new Object();
             newAdmin.name = name;
-            newAdmin.email = mail;
-            newAdmin.email = mail;
-            newAdmin.email = mail;
+            newAdmin.username = usn;
+            newAdmin.password = psw;
+            newAdmin.mobile = mob;
             newAdmin.email = mail;
 
 
             var settings = {
-                url: baseUrl + "/Users/saveUser",
+                url: baseUrl + "/admin/addAdmin",
                 method: "POST",
                 timeout: 3000,
-                data: {
-                    name: name,
-                    email: mail,
-                    mobile: mob,
-                    username: usn,
-                    password: psw
-                }
+                dataType: 'json',
+                "headers": {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(newAdmin)
             };
 
             $.ajax(settings).done(function (response) {
@@ -176,8 +175,11 @@
 
         function deleteUser(x) {
             var settings = {
-                url: baseUrl + "/Users/" + x,
+                url: baseUrl + "/admin/deleteAdmin/" + x,
                 method: "DELETE",
+                "headers": {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                },
                 timeout: 3000
             };
 
@@ -417,7 +419,7 @@
                     <div class="field">
                         <label class="label">Email</label>
                         <div class="control">
-                            <input id="email" class="input" type="number">
+                            <input id="email" class="input" type="email">
                         </div>
                     </div>
 
@@ -461,7 +463,7 @@
                                 <th><abbr title="Id">Id</abbr></th>
                                 <th><abbr title="Name">Name</abbr></th>
                                 <th><abbr title="Email">Email</abbr></th>
-                                <th><abbr title="Mobile">Mobile></abbr></th>
+                                <th><abbr title="Mobile">Mobile</abbr></th>
                                 <th><abbr title="Username">Username</abbr></th>
                                 <th><abbr title="Password for">Password</abbr></th>
                                 <th><abbr title="Update">Update</abbr></th>
