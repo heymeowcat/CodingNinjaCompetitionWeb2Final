@@ -11,8 +11,6 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 
 @Entity(name="Admin")
 @Table(name="admin")
@@ -28,6 +26,20 @@ public class Admin implements Serializable{
 	private String email;
 	private boolean status;
 
+
+	public Admin() {
+		super();
+	}
+	public Admin(int id, String name, String username, String password, String mobile, String email, boolean status) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.mobile = mobile;
+		this.email = email;
+		this.status = status;
+	}
 	public int getId() {
 		return id;
 	}

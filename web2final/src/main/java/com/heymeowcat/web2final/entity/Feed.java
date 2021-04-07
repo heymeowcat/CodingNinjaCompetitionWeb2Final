@@ -12,7 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity(name="Feed")
 @Table(name="feed")
@@ -30,6 +31,22 @@ public class Feed implements Serializable{
 	private boolean status;
 	
 	
+	
+	public Feed() {
+		super();
+	}
+
+
+	public Feed(int id, String keycord, String description, boolean status, Admin admin) {
+		super();
+		this.id = id;
+		this.keycord = keycord;
+		this.description = description;
+		this.status = status;
+		this.admin = admin;
+	}
+
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="id_admin")
 	private Admin admin;
